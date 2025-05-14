@@ -1,5 +1,6 @@
+<img width="895" alt="thumbnail for uniportal" src="https://github.com/user-attachments/assets/78a1834d-d6e3-4e1a-8df1-a130221a89cb" />
+
 # University Portal System
-![Project Screenshot]([path/to/your-image.png](https://drive.google.com/file/d/1P34NZZa3G56OXJuHexGY5zqHilW_6yRn/view?usp=sharing))
 
 The **University Portal System** is a web-based application developed for a **Web Programming** course by **Mustafa Waqar**. 
 Built using **ASP.NET MVC**, it streamlines academic processes for students, teachers, and administrators. 
