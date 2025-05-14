@@ -86,9 +86,9 @@ The system follows the **MVC (Model-View-Controller)** pattern:
   - Developed backend logic (Controllers).
   - Configured database schema and Entity Framework (`StudentPortalModel.edmx`).
   - Planned LinkedIn post to showcase the project.
-  - Collaborated on feature development (e.g., course management, admin dashboard).
+  - Worked on feature development (e.g., course management, admin dashboard).
   - Contributed to UI/UX design and testing.
 
 ## License
-This project is licensed under the [MIT License](LICENSE). Feel free to use and modify, with attribution to [Your Name] and Arman Faisal.
+This project is licensed under the [MIT License](LICENSE). Feel free to use and modify, with attribution to Mustafa Waqar.
 ---
