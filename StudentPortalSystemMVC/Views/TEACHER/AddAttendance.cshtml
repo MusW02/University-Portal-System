@@ -1,0 +1,169 @@
+﻿@*@model List<StudentPortalSystemMVC.Models.StudentAttendanceViewModel>
+    @using System.Web.Optimization
+
+
+    @{
+        ViewBag.Title = "Add Attendance - " + (ViewBag.CourseName ?? "Course");
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Add Attendance for @ViewBag.CourseName</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @using (Html.BeginForm("AddAttendance", "Teacher", new { courseId = ViewBag.CourseId }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        if (Model != null && Model.Any())
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(m => m[i].ENROLLMENT_ID)
+                                @Model[i].StudentName
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(m => m[i].AttendanceDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @required = "required" })
+                                @Html.ValidationMessageFor(m => m[i].AttendanceDate, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.DropDownListFor(m => m[i].Status, new SelectList(new[]
+                                {
+                                    new { Value = "P", Text = "Present" },
+                                    new { Value = "A", Text = "Absent" },
+                                    new { Value = "L", Text = "Late" }
+                                }, "Value", "Text", Model[i].Status), "Select Status", new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(m => m[i].Status, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="@Url.Action("ManageAttendance", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Cancel</a>
+        }
+        else
+        {
+            <p>No students enrolled.</p>
+        }
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+
+@model List<StudentPortalSystemMVC.Models.StudentAttendanceViewModel>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Add Attendance - " + (ViewBag.CourseName ?? "Course");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Add Attendance for @ViewBag.CourseName</h2>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger text-center">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["Success"]</div>
+            }
+
+            @using (Html.BeginForm("AddAttendance", "Teacher", new { courseId = ViewBag.CourseId }, FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (Model != null && Model.Any())
+                {
+                    <div class="table-responsive mb-3">
+                        <table class="table table-striped table-bordered">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th>Student</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(m => m[i].ENROLLMENT_ID)
+                                            @Model[i].StudentName
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(m => m[i].AttendanceDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date", @required = "required" })
+                                            @Html.ValidationMessageFor(m => m[i].AttendanceDate, "", new { @class = "text-danger" })
+                                        </td>
+                                        <td>
+                                            @Html.DropDownListFor(m => m[i].Status, new SelectList(new[]
+                                            {
+                                                new { Value = "P", Text = "Present" },
+                                                new { Value = "A", Text = "Absent" },
+                                                new { Value = "L", Text = "Late" }
+                                            }, "Value", "Text", Model[i].Status), "Select Status", new { @class = "form-control", @required = "required" })
+                                            @Html.ValidationMessageFor(m => m[i].Status, "", new { @class = "text-danger" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="@Url.Action("ManageAttendance", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Cancel</a>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center text-muted">No students enrolled.</p>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

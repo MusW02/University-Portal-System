@@ -1,0 +1,51 @@
+﻿@model IEnumerable<StudentPortalSystemMVC.Models.COURS>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.COURSE_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREDITS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNT_PER_COURSE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEACHER.TEACHER_ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.COURSE_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREDITS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMOUNT_PER_COURSE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEACHER.TEACHER_ID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.COURSE_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.COURSE_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.COURSE_ID })
+        </td>
+    </tr>
+}
+
+</table>

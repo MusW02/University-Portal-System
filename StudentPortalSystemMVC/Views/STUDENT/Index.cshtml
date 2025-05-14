@@ -1,0 +1,85 @@
+﻿@*@model IEnumerable<StudentPortalSystemMVC.Models.STUDENT>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DEPARTMENT.DEP_NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.USER.EMAIL)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DEPARTMENT.DEP_NAME)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.USER.EMAIL)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.ROLL_NO }) |
+                @Html.ActionLink("Details", "Details", new { id=item.ROLL_NO }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ROLL_NO })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+
+@model IEnumerable<StudentPortalSystemMVC.Models.STUDENT>
+
+@{
+    ViewBag.Title = "Student List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Student List</h2>
+
+            <div class="d-flex justify-content-end mb-3">
+                @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.DEPARTMENT.DEP_NAME)</th>
+                            <th>@Html.DisplayNameFor(model => model.USER.EMAIL)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.DEPARTMENT.DEP_NAME)</td>
+                                <td>@Html.DisplayFor(modelItem => item.USER.EMAIL)</td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.ROLL_NO }, new { @class = "btn btn-warning btn-sm me-1" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.ROLL_NO }, new { @class = "btn btn-info btn-sm me-1" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.ROLL_NO }, new { @class = "btn btn-danger btn-sm" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

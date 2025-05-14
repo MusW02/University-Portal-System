@@ -1,0 +1,165 @@
+﻿@*@model StudentPortalSystemMVC.Models.COURS
+    @using System.Web.Optimization
+
+    @{
+        ViewBag.Title = "Add Course";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="container">
+        <h2>Add Course</h2>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        @using (Html.BeginForm("AddCourse", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.COURSE_NAME, "Course Name", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.COURSE_NAME, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.COURSE_NAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CREDITS, "Credits", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CREDITS, new { htmlAttributes = new { @class = "form-control", @type = "number", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.CREDITS, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DepartmentId, "Department", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.DepartmentId, (SelectList)ViewBag.Departments, "Select Department", new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TEACHER_ID, "Teacher", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TEACHER_ID, (SelectList)ViewBag.Teachers, "Select Teacher", new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.TEACHER_ID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.AMOUNT_PER_COURSE, "Amount", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AMOUNT_PER_COURSE, new { htmlAttributes = new { @class = "form-control", @type = "number", @step = "0.01", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.AMOUNT_PER_COURSE, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a href="@Url.Action("CourseList", "Admin")" class="btn btn-secondary">Cancel</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+
+
+@model StudentPortalSystemMVC.Models.COURS
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Add Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Add Course</h2>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger text-center">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["Success"]</div>
+            }
+
+            @using (Html.BeginForm("AddCourse", "Admin", FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.COURSE_NAME, "Course Name", new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.COURSE_NAME, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.COURSE_NAME, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.CREDITS, "Credits", new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.CREDITS, new { @class = "form-control", @type = "number", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.CREDITS, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.DepartmentId, "Department", new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.DepartmentId, (SelectList)ViewBag.Departments, "Select Department", new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.TEACHER_ID, "Teacher", new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.TEACHER_ID, (SelectList)ViewBag.Teachers, "Select Teacher", new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.TEACHER_ID, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.AMOUNT_PER_COURSE, "Amount", new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.AMOUNT_PER_COURSE, new { @class = "form-control", @type = "number", @step = "0.01", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.AMOUNT_PER_COURSE, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="@Url.Action("CourseList", "Admin")" class="btn btn-secondary">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

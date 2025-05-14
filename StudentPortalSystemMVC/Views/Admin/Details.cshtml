@@ -1,0 +1,107 @@
+﻿@*@model StudentPortalSystemMVC.Models.USER
+    @{
+        ViewBag.Title = "User Details";
+    }
+
+    <div class="container">
+        <h2>User Details</h2>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-md-2">Username</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.USERNAME</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">First Name</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.FIRST_NAME</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Last Name</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.LAST_NAME</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Email</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.EMAIL</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Contact</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.CONTACT</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Address</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.ADDRESS</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Role</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.ROLE</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Status</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@Model.STATUS</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Department</label>
+                <div class="col-md-10">
+                    <p class="form-control-static">@(Model.DepartmentId != null ? Model.DEPARTMENT.DEP_NAME : "Not Assigned")</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="@Url.Action("Edit", "Admin", new { id = Model.ID })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@model StudentPortalSystemMVC.Models.USER
+@{
+    ViewBag.Title = "User Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">User Details</h2>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <p><strong>Username:</strong> @Model.USERNAME</p>
+                    <p><strong>First Name:</strong> @Model.FIRST_NAME</p>
+                    <p><strong>Last Name:</strong> @Model.LAST_NAME</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> @Model.EMAIL</p>
+                    <p><strong>Contact:</strong> @Model.CONTACT</p>
+                    <p><strong>Address:</strong> @Model.ADDRESS</p>
+                </div>
+                <div class="col-12">
+                    <p><strong>Role:</strong> @Model.ROLE</p>
+                    <p><strong>Status:</strong> @Model.STATUS</p>
+                    <p><strong>Department:</strong> @(Model.DepartmentId != null ? Model.DEPARTMENT.DEP_NAME : "Not Assigned")</p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="@Url.Action("Edit", "Admin", new { id = Model.ID })" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

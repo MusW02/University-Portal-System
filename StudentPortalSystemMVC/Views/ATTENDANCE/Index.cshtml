@@ -1,0 +1,63 @@
+﻿@model IEnumerable<StudentPortalSystemMVC.Models.USER>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Admin - Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users Management</h2>
+
+@if (TempData["Warning"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Warning"]
+        <a href="@Url.Action("AssignDepartment", "Admin")" class="alert-link">Assign Department</a>
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>EMAIL</th>
+                <th>USERNAME</th>
+                <th>ROLE</th>
+                <th>Status</th>
+                <th>Department</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var USER in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => USER.EMAIL)</td>
+                    <td>@Html.DisplayFor(modelItem => USER.USERNAME)</td>
+                    <td>@Html.DisplayFor(modelItem => USER.ROLE)</td>
+                    <td>@Html.DisplayFor(modelItem => USER.STATUS)</td>
+                    <td>@(USER.DepartmentId != null && USER.DEPARTMENT != null ? USER.DEPARTMENT.DEP_NAME : "Not Assigned")</td>
+                    <td>
+                        @if (USER.STATUS == "Pending")
+                        {
+                            @Html.ActionLink("Approve", "Approve", new { id = USER.ID }, new { @class = "btn btn-success btn-sm" })
+                        }
+                        @Html.ActionLink("Edit", "Edit", new { id = USER.ID }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = USER.ID }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = USER.ID }, new { @class = "btn btn-danger btn-sm" })
+                        @Html.ActionLink("Assign Department", "AssignDepartment", new { id = USER.ID }, new { @class = "btn btn-warning btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,64 @@
+﻿@model StudentPortalSystemMVC.Models.TRANSCRIPT
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TRANSCRIPT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SGPA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SGPA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CGPA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CGPA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COURS.COURSE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COURS.COURSE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GRADE.GRADE1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GRADE.GRADE1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STUDENT.ROLL_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STUDENT.ROLL_NO)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,937 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StudentPortalSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ATTENDANCE">
+          <Key>
+            <PropertyRef Name="ATTENDANCE_ID" />
+          </Key>
+          <Property Name="ATTENDANCE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ATTENDANCE_DATE" Type="date" Nullable="false" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="ENROLLMENT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CourseRegistrationStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsOpen" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="COURSES">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COURSE_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CREDITS" Type="int" Nullable="false" />
+          <Property Name="TEACHER_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT_PER_COURSE" Type="float" Nullable="false" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <EntityType Name="DEPARTMENTS">
+          <Key>
+            <PropertyRef Name="DEP_ID" />
+          </Key>
+          <Property Name="DEP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DEP_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ENROLLMENTS">
+          <Key>
+            <PropertyRef Name="ENROLLMENT_ID" />
+          </Key>
+          <Property Name="ENROLLMENT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STUDENT_ID" Type="int" Nullable="false" />
+          <Property Name="COURSE_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FEES">
+          <Key>
+            <PropertyRef Name="FEE_ID" />
+          </Key>
+          <Property Name="FEE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STUDENT_ID" Type="int" Nullable="false" />
+          <Property Name="COURSE_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT" Type="float" Nullable="false" />
+          <Property Name="FEE_STATUS" Type="bit" />
+        </EntityType>
+        <EntityType Name="GRADES">
+          <Key>
+            <PropertyRef Name="GRADE_ID" />
+          </Key>
+          <Property Name="GRADE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ENROLLMENT_ID" Type="int" Nullable="false" />
+          <Property Name="MARKS" Type="int" />
+          <Property Name="GRADE" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="STUDENTS">
+          <Key>
+            <PropertyRef Name="ROLL_NO" />
+          </Key>
+          <Property Name="ROLL_NO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="DEPARTMENT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TEACHERS">
+          <Key>
+            <PropertyRef Name="TEACHER_ID" />
+          </Key>
+          <Property Name="TEACHER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="DEPARTMENT_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRANSCRIPT">
+          <Key>
+            <PropertyRef Name="TRANSCRIPT_ID" />
+          </Key>
+          <Property Name="TRANSCRIPT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COURSE_ID" Type="int" Nullable="false" />
+          <Property Name="STUDENT_ID" Type="int" Nullable="false" />
+          <Property Name="GRADE_ID" Type="int" Nullable="false" />
+          <Property Name="SGPA" Type="float" />
+          <Property Name="CGPA" Type="float" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMAIL" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="USERNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD_HASH" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="LAST_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="CONTACT" Type="nvarchar" MaxLength="20" />
+          <Property Name="ADDRESS" Type="nvarchar" MaxLength="255" />
+          <Property Name="ROLE" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IS_ADMIN" Type="bit" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="20" />
+          <Property Name="DepartmentId" Type="int" />
+        </EntityType>
+        <Association Name="FK__ATTENDANC__ENROL__4D94879B">
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENTS" Multiplicity="1" />
+          <End Role="ATTENDANCE" Type="Self.ATTENDANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENROLLMENTS">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Principal>
+            <Dependent Role="ATTENDANCE">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COURSES__TEACHER__45F365D3">
+          <End Role="TEACHERS" Type="Self.TEACHERS" Multiplicity="1" />
+          <End Role="COURSES" Type="Self.COURSES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEACHERS">
+              <PropertyRef Name="TEACHER_ID" />
+            </Principal>
+            <Dependent Role="COURSES">
+              <PropertyRef Name="TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ENROLLMEN__COURS__49C3F6B7">
+          <End Role="COURSES" Type="Self.COURSES" Multiplicity="1" />
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="ENROLLMENTS">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ENROLLMEN__STUDE__48CFD27E">
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="1" />
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="ENROLLMENTS">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FEES__COURSE_ID__52593CB8">
+          <End Role="COURSES" Type="Self.COURSES" Multiplicity="1" />
+          <End Role="FEES" Type="Self.FEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="FEES">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FEES__STUDENT_ID__5165187F">
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="1" />
+          <End Role="FEES" Type="Self.FEES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="FEES">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GRADES__ENROLLME__5535A963">
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENTS" Multiplicity="1" />
+          <End Role="GRADES" Type="Self.GRADES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENROLLMENTS">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Principal>
+            <Dependent Role="GRADES">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__DEPART__3F466844">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__USER_I__3E52440B">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__DEPART__4316F928">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__USER_I__4222D4EF">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__COURS__5812160E">
+          <End Role="COURSES" Type="Self.COURSES" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__GRADE__59FA5E80">
+          <End Role="GRADES" Type="Self.GRADES" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRADES">
+              <PropertyRef Name="GRADE_ID" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="GRADE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__STUDE__59063A47">
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Courses_Departments">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="COURSES" Type="Self.COURSES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="COURSES">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Departments">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENTS" Multiplicity="0..1" />
+          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentPortalSystemModelStoreContainer">
+          <EntitySet Name="ATTENDANCE" EntityType="Self.ATTENDANCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseRegistrationStatus" EntityType="Self.CourseRegistrationStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COURSES" EntityType="Self.COURSES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ENROLLMENTS" EntityType="Self.ENROLLMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FEES" EntityType="Self.FEES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GRADES" EntityType="Self.GRADES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEACHERS" EntityType="Self.TEACHERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSCRIPT" EntityType="Self.TRANSCRIPT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ATTENDANC__ENROL__4D94879B" Association="Self.FK__ATTENDANC__ENROL__4D94879B">
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+            <End Role="ATTENDANCE" EntitySet="ATTENDANCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COURSES__TEACHER__45F365D3" Association="Self.FK__COURSES__TEACHER__45F365D3">
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+            <End Role="COURSES" EntitySet="COURSES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ENROLLMEN__COURS__49C3F6B7" Association="Self.FK__ENROLLMEN__COURS__49C3F6B7">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ENROLLMEN__STUDE__48CFD27E" Association="Self.FK__ENROLLMEN__STUDE__48CFD27E">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FEES__COURSE_ID__52593CB8" Association="Self.FK__FEES__COURSE_ID__52593CB8">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="FEES" EntitySet="FEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FEES__STUDENT_ID__5165187F" Association="Self.FK__FEES__STUDENT_ID__5165187F">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="FEES" EntitySet="FEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GRADES__ENROLLME__5535A963" Association="Self.FK__GRADES__ENROLLME__5535A963">
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+            <End Role="GRADES" EntitySet="GRADES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__DEPART__3F466844" Association="Self.FK__STUDENTS__DEPART__3F466844">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__USER_I__3E52440B" Association="Self.FK__STUDENTS__USER_I__3E52440B">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__DEPART__4316F928" Association="Self.FK__TEACHERS__DEPART__4316F928">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__USER_I__4222D4EF" Association="Self.FK__TEACHERS__USER_I__4222D4EF">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__COURS__5812160E" Association="Self.FK__TRANSCRIP__COURS__5812160E">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__GRADE__59FA5E80" Association="Self.FK__TRANSCRIP__GRADE__59FA5E80">
+            <End Role="GRADES" EntitySet="GRADES" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPT" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__STUDE__59063A47" Association="Self.FK__TRANSCRIP__STUDE__59063A47">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Courses_Departments" Association="Self.FK_Courses_Departments">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="COURSES" EntitySet="COURSES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Departments" Association="Self.FK_Users_Departments">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentPortalSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ATTENDANCE">
+          <Key>
+            <PropertyRef Name="ATTENDANCE_ID" />
+          </Key>
+          <Property Name="ATTENDANCE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ATTENDANCE_DATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="STATUS" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ENROLLMENT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ENROLLMENT" Relationship="Self.FK__ATTENDANC__ENROL__4D94879B" FromRole="ATTENDANCE" ToRole="ENROLLMENTS" />
+        </EntityType>
+        <EntityType Name="COURS">
+          <Key>
+            <PropertyRef Name="COURSE_ID" />
+          </Key>
+          <Property Name="COURSE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COURSE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CREDITS" Type="Int32" Nullable="false" />
+          <Property Name="TEACHER_ID" Type="Int32" Nullable="false" />
+          <Property Name="AMOUNT_PER_COURSE" Type="Double" Nullable="false" />
+          <NavigationProperty Name="TEACHER" Relationship="Self.FK__COURSES__TEACHER__45F365D3" FromRole="COURSES" ToRole="TEACHERS" />
+          <NavigationProperty Name="ENROLLMENTS" Relationship="Self.FK__ENROLLMEN__COURS__49C3F6B7" FromRole="COURSES" ToRole="ENROLLMENTS" />
+          <NavigationProperty Name="FEES" Relationship="Self.FK__FEES__COURSE_ID__52593CB8" FromRole="COURSES" ToRole="FEES" />
+          <NavigationProperty Name="TRANSCRIPTs" Relationship="Self.FK__TRANSCRIP__COURS__5812160E" FromRole="COURSES" ToRole="TRANSCRIPT" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="StudentPortalSystemModel.FK_Courses_Departments" FromRole="COURS" ToRole="DEPARTMENT" />
+        </EntityType>
+        <EntityType Name="DEPARTMENT">
+          <Key>
+            <PropertyRef Name="DEP_ID" />
+          </Key>
+          <Property Name="DEP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DEP_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="STUDENTS" Relationship="Self.FK__STUDENTS__DEPART__3F466844" FromRole="DEPARTMENTS" ToRole="STUDENTS" />
+          <NavigationProperty Name="TEACHERS" Relationship="Self.FK__TEACHERS__DEPART__4316F928" FromRole="DEPARTMENTS" ToRole="TEACHERS" />
+          <NavigationProperty Name="USERS" Relationship="StudentPortalSystemModel.FK_Users_Departments" FromRole="DEPARTMENT" ToRole="USER" />
+          <NavigationProperty Name="COURSES" Relationship="StudentPortalSystemModel.FK_Courses_Departments" FromRole="DEPARTMENT" ToRole="COURS" />
+        </EntityType>
+        <EntityType Name="ENROLLMENT">
+          <Key>
+            <PropertyRef Name="ENROLLMENT_ID" />
+          </Key>
+          <Property Name="ENROLLMENT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STUDENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="COURSE_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ATTENDANCEs" Relationship="Self.FK__ATTENDANC__ENROL__4D94879B" FromRole="ENROLLMENTS" ToRole="ATTENDANCE" />
+          <NavigationProperty Name="COURS" Relationship="Self.FK__ENROLLMEN__COURS__49C3F6B7" FromRole="ENROLLMENTS" ToRole="COURSES" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__ENROLLMEN__STUDE__48CFD27E" FromRole="ENROLLMENTS" ToRole="STUDENTS" />
+          <NavigationProperty Name="GRADES" Relationship="Self.FK__GRADES__ENROLLME__5535A963" FromRole="ENROLLMENTS" ToRole="GRADES" />
+        </EntityType>
+        <EntityType Name="FEE">
+          <Key>
+            <PropertyRef Name="FEE_ID" />
+          </Key>
+          <Property Name="FEE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STUDENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="COURSE_ID" Type="Int32" Nullable="false" />
+          <Property Name="AMOUNT" Type="Double" Nullable="false" />
+          <Property Name="FEE_STATUS" Type="Boolean" />
+          <NavigationProperty Name="COURS" Relationship="Self.FK__FEES__COURSE_ID__52593CB8" FromRole="FEES" ToRole="COURSES" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__FEES__STUDENT_ID__5165187F" FromRole="FEES" ToRole="STUDENTS" />
+        </EntityType>
+        <EntityType Name="GRADE">
+          <Key>
+            <PropertyRef Name="GRADE_ID" />
+          </Key>
+          <Property Name="GRADE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ENROLLMENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="MARKS" Type="Int32" />
+          <Property Name="GRADE1" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ENROLLMENT" Relationship="Self.FK__GRADES__ENROLLME__5535A963" FromRole="GRADES" ToRole="ENROLLMENTS" />
+          <NavigationProperty Name="TRANSCRIPTs" Relationship="Self.FK__TRANSCRIP__GRADE__59FA5E80" FromRole="GRADES" ToRole="TRANSCRIPT" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="ROLL_NO" />
+          </Key>
+          <Property Name="ROLL_NO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="DEPARTMENT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK__STUDENTS__DEPART__3F466844" FromRole="STUDENTS" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="ENROLLMENTS" Relationship="Self.FK__ENROLLMEN__STUDE__48CFD27E" FromRole="STUDENTS" ToRole="ENROLLMENTS" />
+          <NavigationProperty Name="FEES" Relationship="Self.FK__FEES__STUDENT_ID__5165187F" FromRole="STUDENTS" ToRole="FEES" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__STUDENTS__USER_I__3E52440B" FromRole="STUDENTS" ToRole="USERS" />
+          <NavigationProperty Name="TRANSCRIPTs" Relationship="Self.FK__TRANSCRIP__STUDE__59063A47" FromRole="STUDENTS" ToRole="TRANSCRIPT" />
+        </EntityType>
+        <EntityType Name="TEACHER">
+          <Key>
+            <PropertyRef Name="TEACHER_ID" />
+          </Key>
+          <Property Name="TEACHER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="DEPARTMENT_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="COURSES" Relationship="Self.FK__COURSES__TEACHER__45F365D3" FromRole="TEACHERS" ToRole="COURSES" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="Self.FK__TEACHERS__DEPART__4316F928" FromRole="TEACHERS" ToRole="DEPARTMENTS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__TEACHERS__USER_I__4222D4EF" FromRole="TEACHERS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="TRANSCRIPT">
+          <Key>
+            <PropertyRef Name="TRANSCRIPT_ID" />
+          </Key>
+          <Property Name="TRANSCRIPT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COURSE_ID" Type="Int32" Nullable="false" />
+          <Property Name="STUDENT_ID" Type="Int32" Nullable="false" />
+          <Property Name="GRADE_ID" Type="Int32" Nullable="false" />
+          <Property Name="SGPA" Type="Double" />
+          <Property Name="CGPA" Type="Double" />
+          <NavigationProperty Name="COURS" Relationship="Self.FK__TRANSCRIP__COURS__5812160E" FromRole="TRANSCRIPT" ToRole="COURSES" />
+          <NavigationProperty Name="GRADE" Relationship="Self.FK__TRANSCRIP__GRADE__59FA5E80" FromRole="TRANSCRIPT" ToRole="GRADES" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__TRANSCRIP__STUDE__59063A47" FromRole="TRANSCRIPT" ToRole="STUDENTS" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PASSWORD_HASH" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CONTACT" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ROLE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IS_ADMIN" Type="Boolean" />
+          <Property Name="STATUS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="STUDENTS" Relationship="Self.FK__STUDENTS__USER_I__3E52440B" FromRole="USERS" ToRole="STUDENTS" />
+          <NavigationProperty Name="TEACHERS" Relationship="Self.FK__TEACHERS__USER_I__4222D4EF" FromRole="USERS" ToRole="TEACHERS" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <NavigationProperty Name="DEPARTMENT" Relationship="StudentPortalSystemModel.FK_Users_Departments" FromRole="USER" ToRole="DEPARTMENT" />
+        </EntityType>
+        <Association Name="FK__ATTENDANC__ENROL__4D94879B">
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENT" Multiplicity="1" />
+          <End Role="ATTENDANCE" Type="Self.ATTENDANCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENROLLMENTS">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Principal>
+            <Dependent Role="ATTENDANCE">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COURSES__TEACHER__45F365D3">
+          <End Role="TEACHERS" Type="Self.TEACHER" Multiplicity="1" />
+          <End Role="COURSES" Type="Self.COURS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TEACHERS">
+              <PropertyRef Name="TEACHER_ID" />
+            </Principal>
+            <Dependent Role="COURSES">
+              <PropertyRef Name="TEACHER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ENROLLMEN__COURS__49C3F6B7">
+          <End Role="COURSES" Type="Self.COURS" Multiplicity="1" />
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="ENROLLMENTS">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FEES__COURSE_ID__52593CB8">
+          <End Role="COURSES" Type="Self.COURS" Multiplicity="1" />
+          <End Role="FEES" Type="Self.FEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="FEES">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__COURS__5812160E">
+          <End Role="COURSES" Type="Self.COURS" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COURSES">
+              <PropertyRef Name="COURSE_ID" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="COURSE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__DEPART__3F466844">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__DEPART__4316F928">
+          <End Role="DEPARTMENTS" Type="Self.DEPARTMENT" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENTS">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="DEPARTMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ENROLLMEN__STUDE__48CFD27E">
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="1" />
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="ENROLLMENTS">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__GRADES__ENROLLME__5535A963">
+          <End Role="ENROLLMENTS" Type="Self.ENROLLMENT" Multiplicity="1" />
+          <End Role="GRADES" Type="Self.GRADE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENROLLMENTS">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Principal>
+            <Dependent Role="GRADES">
+              <PropertyRef Name="ENROLLMENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FEES__STUDENT_ID__5165187F">
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="1" />
+          <End Role="FEES" Type="Self.FEE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="FEES">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__GRADE__59FA5E80">
+          <End Role="GRADES" Type="Self.GRADE" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRADES">
+              <PropertyRef Name="GRADE_ID" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="GRADE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__USER_I__3E52440B">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSCRIP__STUDE__59063A47">
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="1" />
+          <End Role="TRANSCRIPT" Type="Self.TRANSCRIPT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENTS">
+              <PropertyRef Name="ROLL_NO" />
+            </Principal>
+            <Dependent Role="TRANSCRIPT">
+              <PropertyRef Name="STUDENT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__USER_I__4222D4EF">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentPortalSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ATTENDANCEs" EntityType="Self.ATTENDANCE" />
+          <EntitySet Name="COURSES" EntityType="Self.COURS" />
+          <EntitySet Name="DEPARTMENTS" EntityType="Self.DEPARTMENT" />
+          <EntitySet Name="ENROLLMENTS" EntityType="Self.ENROLLMENT" />
+          <EntitySet Name="FEES" EntityType="Self.FEE" />
+          <EntitySet Name="GRADES" EntityType="Self.GRADE" />
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENT" />
+          <EntitySet Name="TEACHERS" EntityType="Self.TEACHER" />
+          <EntitySet Name="TRANSCRIPTs" EntityType="Self.TRANSCRIPT" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK__ATTENDANC__ENROL__4D94879B" Association="Self.FK__ATTENDANC__ENROL__4D94879B">
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+            <End Role="ATTENDANCE" EntitySet="ATTENDANCEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COURSES__TEACHER__45F365D3" Association="Self.FK__COURSES__TEACHER__45F365D3">
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+            <End Role="COURSES" EntitySet="COURSES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ENROLLMEN__COURS__49C3F6B7" Association="Self.FK__ENROLLMEN__COURS__49C3F6B7">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FEES__COURSE_ID__52593CB8" Association="Self.FK__FEES__COURSE_ID__52593CB8">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="FEES" EntitySet="FEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__COURS__5812160E" Association="Self.FK__TRANSCRIP__COURS__5812160E">
+            <End Role="COURSES" EntitySet="COURSES" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__DEPART__3F466844" Association="Self.FK__STUDENTS__DEPART__3F466844">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__DEPART__4316F928" Association="Self.FK__TEACHERS__DEPART__4316F928">
+            <End Role="DEPARTMENTS" EntitySet="DEPARTMENTS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ENROLLMEN__STUDE__48CFD27E" Association="Self.FK__ENROLLMEN__STUDE__48CFD27E">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__GRADES__ENROLLME__5535A963" Association="Self.FK__GRADES__ENROLLME__5535A963">
+            <End Role="ENROLLMENTS" EntitySet="ENROLLMENTS" />
+            <End Role="GRADES" EntitySet="GRADES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FEES__STUDENT_ID__5165187F" Association="Self.FK__FEES__STUDENT_ID__5165187F">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="FEES" EntitySet="FEES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__GRADE__59FA5E80" Association="Self.FK__TRANSCRIP__GRADE__59FA5E80">
+            <End Role="GRADES" EntitySet="GRADES" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__USER_I__3E52440B" Association="Self.FK__STUDENTS__USER_I__3E52440B">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSCRIP__STUDE__59063A47" Association="Self.FK__TRANSCRIP__STUDE__59063A47">
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+            <End Role="TRANSCRIPT" EntitySet="TRANSCRIPTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__USER_I__4222D4EF" Association="Self.FK__TEACHERS__USER_I__4222D4EF">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <EntitySet Name="CourseRegistrationStatus" EntityType="StudentPortalSystemModel.CourseRegistrationStatu" />
+          <AssociationSet Name="FK_Users_Departments" Association="StudentPortalSystemModel.FK_Users_Departments">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENTS" />
+            <End Role="USER" EntitySet="USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Courses_Departments" Association="StudentPortalSystemModel.FK_Courses_Departments">
+            <End Role="DEPARTMENT" EntitySet="DEPARTMENTS" />
+            <End Role="COURS" EntitySet="COURSES" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="CourseRegistrationStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Users_Departments">
+          <End Type="StudentPortalSystemModel.DEPARTMENT" Role="DEPARTMENT" Multiplicity="0..1" />
+          <End Type="StudentPortalSystemModel.USER" Role="USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="USER">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Courses_Departments">
+          <End Type="StudentPortalSystemModel.DEPARTMENT" Role="DEPARTMENT" Multiplicity="0..1" />
+          <End Type="StudentPortalSystemModel.COURS" Role="COURS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DEPARTMENT">
+              <PropertyRef Name="DEP_ID" />
+            </Principal>
+            <Dependent Role="COURS">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudentPortalSystemModelStoreContainer" CdmEntityContainer="StudentPortalSystemEntities">
+          <EntitySetMapping Name="ATTENDANCEs">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.ATTENDANCE">
+              <MappingFragment StoreEntitySet="ATTENDANCE">
+                <ScalarProperty Name="ATTENDANCE_ID" ColumnName="ATTENDANCE_ID" />
+                <ScalarProperty Name="ATTENDANCE_DATE" ColumnName="ATTENDANCE_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="ENROLLMENT_ID" ColumnName="ENROLLMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COURSES">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.COURS">
+              <MappingFragment StoreEntitySet="COURSES">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="COURSE_NAME" ColumnName="COURSE_NAME" />
+                <ScalarProperty Name="CREDITS" ColumnName="CREDITS" />
+                <ScalarProperty Name="TEACHER_ID" ColumnName="TEACHER_ID" />
+                <ScalarProperty Name="AMOUNT_PER_COURSE" ColumnName="AMOUNT_PER_COURSE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DEPARTMENTS">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.DEPARTMENT">
+              <MappingFragment StoreEntitySet="DEPARTMENTS">
+                <ScalarProperty Name="DEP_ID" ColumnName="DEP_ID" />
+                <ScalarProperty Name="DEP_NAME" ColumnName="DEP_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ENROLLMENTS">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.ENROLLMENT">
+              <MappingFragment StoreEntitySet="ENROLLMENTS">
+                <ScalarProperty Name="ENROLLMENT_ID" ColumnName="ENROLLMENT_ID" />
+                <ScalarProperty Name="STUDENT_ID" ColumnName="STUDENT_ID" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FEES">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.FEE">
+              <MappingFragment StoreEntitySet="FEES">
+                <ScalarProperty Name="FEE_ID" ColumnName="FEE_ID" />
+                <ScalarProperty Name="STUDENT_ID" ColumnName="STUDENT_ID" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="FEE_STATUS" ColumnName="FEE_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GRADES">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.GRADE">
+              <MappingFragment StoreEntitySet="GRADES">
+                <ScalarProperty Name="GRADE_ID" ColumnName="GRADE_ID" />
+                <ScalarProperty Name="ENROLLMENT_ID" ColumnName="ENROLLMENT_ID" />
+                <ScalarProperty Name="MARKS" ColumnName="MARKS" />
+                <ScalarProperty Name="GRADE1" ColumnName="GRADE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENTS">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENTS">
+                <ScalarProperty Name="ROLL_NO" ColumnName="ROLL_NO" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEACHERS">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.TEACHER">
+              <MappingFragment StoreEntitySet="TEACHERS">
+                <ScalarProperty Name="TEACHER_ID" ColumnName="TEACHER_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="DEPARTMENT_ID" ColumnName="DEPARTMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSCRIPTs">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.TRANSCRIPT">
+              <MappingFragment StoreEntitySet="TRANSCRIPT">
+                <ScalarProperty Name="TRANSCRIPT_ID" ColumnName="TRANSCRIPT_ID" />
+                <ScalarProperty Name="COURSE_ID" ColumnName="COURSE_ID" />
+                <ScalarProperty Name="STUDENT_ID" ColumnName="STUDENT_ID" />
+                <ScalarProperty Name="GRADE_ID" ColumnName="GRADE_ID" />
+                <ScalarProperty Name="SGPA" ColumnName="SGPA" />
+                <ScalarProperty Name="CGPA" ColumnName="CGPA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD_HASH" ColumnName="PASSWORD_HASH" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="CONTACT" ColumnName="CONTACT" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="ROLE" ColumnName="ROLE" />
+                <ScalarProperty Name="IS_ADMIN" ColumnName="IS_ADMIN" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseRegistrationStatus">
+            <EntityTypeMapping TypeName="StudentPortalSystemModel.CourseRegistrationStatu">
+              <MappingFragment StoreEntitySet="CourseRegistrationStatus">
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,96 @@
+﻿@*@{
+        ViewBag.Title = "Login";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Login</h2>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    <h3>Admin Login</h3>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Login as Admin</button>
+    }
+
+    <h3>Student/Teacher Login</h3>
+    <p>Please select your role to log in or register:</p>
+    <div class="form-group">
+        <a href="@Url.Action("LoginOrRegister", "Account", new { role = "Student" })" class="btn btn-info">Student</a>
+        <a href="@Url.Action("LoginOrRegister", "Account", new { role = "Teacher" })" class="btn btn-info">Teacher</a>
+    </div>*@
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Login</h2>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger text-center">@ViewBag.ErrorMessage</div>
+            }
+
+            <!-- Admin Login Section -->
+            <h3 class="mb-3 text-muted">Admin Login</h3>
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" required />
+                    <div class="invalid-feedback">Please enter a username.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" required />
+                    <div class="invalid-feedback">Please enter a password.</div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Login as Admin</button>
+            }
+
+            <!-- Student/Teacher Login Section -->
+            <h3 class="mb-3 text-muted">Student/Teacher Login</h3>
+            <p class="text-muted mb-4">Please select your role to log in or register:</p>
+            <div class="d-flex justify-content-center gap-2">
+                <a href="@Url.Action("LoginOrRegister", "Account", new { role = "Student" })" class="btn btn-info">Student</a>
+                <a href="@Url.Action("LoginOrRegister", "Account", new { role = "Teacher" })" class="btn btn-info">Teacher</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

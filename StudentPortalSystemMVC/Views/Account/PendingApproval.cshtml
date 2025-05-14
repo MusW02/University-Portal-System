@@ -1,0 +1,23 @@
+﻿@*@{
+        ViewBag.Title = "Pending Approval";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Registration Complete</h2>
+    <p>Your registration as a @ViewBag.Role is done. It is pending approval from the admin.</p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Back to Home</a>*@
+
+@{
+    ViewBag.Title = "Pending Approval";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light text-center">
+            <h2 class="mb-4 text-primary">Registration Complete</h2>
+            <p class="lead text-muted">Your registration as a <strong>@ViewBag.Role</strong> is done. It is pending approval from the admin.</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary mt-3">Back to Home</a>
+        </div>
+    </div>
+</div>

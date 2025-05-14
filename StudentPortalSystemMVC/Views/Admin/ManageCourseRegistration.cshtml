@@ -1,0 +1,40 @@
+﻿@*@model StudentPortalSystemMVC.Models.CourseRegistrationStatu
+
+    @{
+        ViewBag.Title = "Manage Course Registration";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Manage Course Registration</h2>
+
+    <p>Course Registration is currently: <strong>@(Model.IsOpen ? "Open" : "Closed")</strong></p>
+
+    <a href="@Url.Action("ToggleCourseRegistration", new { id = Model.Id })" class="btn btn-primary">
+        @(Model.IsOpen ? "Close Registration" : "Open Registration")
+    </a>*@
+
+@model StudentPortalSystemMVC.Models.CourseRegistrationStatu
+
+@{
+    ViewBag.Title = "Manage Course Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light text-center">
+            <h2 class="mb-4 text-primary">Manage Course Registration</h2>
+
+            <p class="lead mb-4">
+                Course Registration is currently:
+                <strong class="@(Model.IsOpen ? "text-success" : "text-danger")">
+                    @(Model.IsOpen ? "Open" : "Closed")
+                </strong>
+            </p>
+
+            <a href="@Url.Action("ToggleCourseRegistration", new { id = Model.Id })" class="btn btn-primary">
+                @(Model.IsOpen ? "Close Registration" : "Open Registration")
+            </a>
+        </div>
+    </div>
+</div>

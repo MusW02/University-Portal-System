@@ -1,0 +1,172 @@
+﻿@*@model StudentPortalSystemMVC.Models.USER
+    @using System.Web.Optimization
+
+    @{
+        ViewBag.Title = "Register @ViewBag.ROLE";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Register as @ViewBag.ROLE</h2>
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="ROLE" value="@ViewBag.ROLE" />
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.USERNAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.USERNAME, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.USERNAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PASSWORD_HASH, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PASSWORD_HASH, new { htmlAttributes = new { @class = "form-control", type = "password", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.PASSWORD_HASH, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMAIL, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMAIL, new { htmlAttributes = new { @class = "form-control", type = "email", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.EMAIL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FIRST_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FIRST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FIRST_NAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LAST_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LAST_NAME, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LAST_NAME, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CONTACT, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CONTACT, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CONTACT, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ADDRESS, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ADDRESS, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ADDRESS, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a href="@Url.Action("LoginOrRegister", new { role = ViewBag.Role })" class="btn btn-secondary">Cancel</a>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+@model StudentPortalSystemMVC.Models.USER
+@using System.Web.Optimization
+@{
+    ViewBag.Title = "Register as " + ViewBag.ROLE;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4 mt-4 shadow-sm">
+            <h2 class="text-center mb-4">Register as @ViewBag.ROLE</h2>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+            }
+
+            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+            @using (Html.BeginForm("Register", "Account", new { role = ViewBag.ROLE }, FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.USERNAME, "Username", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.USERNAME, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.USERNAME, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.PASSWORD_HASH, "Password", new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.PASSWORD_HASH, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.PASSWORD_HASH, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.EMAIL, "Email", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.EMAIL, new { @class = "form-control", @type = "email", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.EMAIL, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.FIRST_NAME, "First Name", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.FIRST_NAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FIRST_NAME, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.LAST_NAME, "Last Name", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.LAST_NAME, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LAST_NAME, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.CONTACT, "Contact", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.CONTACT, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.CONTACT, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.ADDRESS, "Address", new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.ADDRESS, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ADDRESS, "", new { @class = "text-danger" })
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a href="@Url.Action("LoginOrRegister", new { role = ViewBag.ROLE })" class="btn btn-secondary">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

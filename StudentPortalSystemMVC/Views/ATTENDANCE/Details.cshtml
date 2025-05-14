@@ -1,0 +1,42 @@
+﻿@model StudentPortalSystemMVC.Models.ATTENDANCE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ATTENDANCE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ATTENDANCE_DATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ATTENDANCE_DATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ENROLLMENT.ENROLLMENT_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ENROLLMENT.ENROLLMENT_ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ATTENDANCE_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

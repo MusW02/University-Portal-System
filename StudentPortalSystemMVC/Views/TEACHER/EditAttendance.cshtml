@@ -1,0 +1,108 @@
+﻿@*@model StudentPortalSystemMVC.Models.StudentAttendanceViewModel
+    @using System.Web.Optimization
+
+
+    @{
+        ViewBag.Title = "Edit Attendance";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Edit Attendance for @Model.StudentName</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    @using (Html.BeginForm("EditAttendance", "Teacher", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ATTENDANCE_ID)
+        @Html.HiddenFor(m => m.ENROLLMENT_ID)
+        <div class="form-group">
+            <label for="AttendanceDate">Attendance Date</label>
+            @Html.TextBoxFor(m => m.AttendanceDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(m => m.AttendanceDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            <label for="Status">Status</label>
+            @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "P", "A" }, Model.Status), "-- Select Status --", new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="@Url.Action("ManageAttendance", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Cancel</a>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+@model StudentPortalSystemMVC.Models.StudentAttendanceViewModel
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Edit Attendance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Edit Attendance for @Model.StudentName</h2>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger text-center">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["Success"]</div>
+            }
+
+            @using (Html.BeginForm("EditAttendance", "Teacher", FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ATTENDANCE_ID)
+                @Html.HiddenFor(m => m.ENROLLMENT_ID)
+                <div class="mb-3">
+                    <label for="AttendanceDate" class="form-label">Attendance Date</label>
+                    @Html.TextBoxFor(m => m.AttendanceDate, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.AttendanceDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    <label for="Status" class="form-label">Status</label>
+                    @Html.DropDownListFor(m => m.Status, new SelectList(new[] { "P", "A" }, Model.Status), "-- Select Status --", new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="@Url.Action("ManageAttendance", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

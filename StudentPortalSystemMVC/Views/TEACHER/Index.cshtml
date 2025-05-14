@@ -1,0 +1,39 @@
+﻿@model IEnumerable<StudentPortalSystemMVC.Models.TEACHER>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DEPARTMENT.DEP_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USER.EMAIL)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DEPARTMENT.DEP_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USER.EMAIL)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TEACHER_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TEACHER_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TEACHER_ID })
+        </td>
+    </tr>
+}
+
+</table>

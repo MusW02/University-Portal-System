@@ -1,0 +1,78 @@
+﻿@*@{
+        ViewBag.Title = "Register Course";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Register Course</h2>
+
+    @if (TempData["Message"] != null)
+    {
+        <p class="alert alert-info">@TempData["Message"]</p>
+    }
+
+    @using (Html.BeginForm("RegisterCourse", "STUDENT", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="courseId" class="control-label col-md-2">Select Course</label>
+            <div class="col-md-10">
+                @Html.DropDownList("courseId", (IEnumerable<SelectListItem>)ViewBag.Courses, "Select a course", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    }*@
+
+@{
+    ViewBag.Title = "Register Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Register Course</h2>
+
+            @if (TempData["Message"] != null)
+            {
+                <p class="alert alert-info text-center">@TempData["Message"]</p>
+            }
+
+            @using (Html.BeginForm("RegisterCourse", "STUDENT", FormMethod.Post, new { @class = "needs-validation", novalidate = true }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <label for="courseId" class="form-label">Select Course</label>
+                    @Html.DropDownList("courseId", (IEnumerable<SelectListItem>)ViewBag.Courses, "Select a course", new { @class = "form-control", @required = "required" })
+                    <div class="invalid-feedback">Please select a course.</div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="@Url.Action("Dashboard", "STUDENT")" class="btn btn-secondary">Go to Dashboard</a>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Bootstrap form validation
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+}

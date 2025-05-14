@@ -1,0 +1,386 @@
+﻿@*@{
+        ViewBag.Title = "Student Dashboard";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Welcome, @ViewBag.Student.FIRST_NAME @ViewBag.Student.LAST_NAME</h2>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    }
+     Personal Info
+    <h3>Personal Information</h3>
+    <p><strong>Email:</strong> @ViewBag.Student.EMAIL</p>
+    <p><strong>Contact:</strong> @(ViewBag.Student.CONTACT ?? "N/A")</p>
+    <p><strong>Address:</strong> @(ViewBag.Student.ADDRESS ?? "N/A")</p>
+    <p><strong>Department:</strong> @ViewBag.Department</p>
+     Course Registration
+    <h3>Course Registration</h3>
+    @if (ViewBag.IsCourseRegistrationOpen)
+    {
+        <p>Course registration is open. <a href="@Url.Action("RegisterCourse", "STUDENT")" class="btn btn-primary">Register for a Course</a></p>
+    }
+    else
+    {
+        <p>Course registration is closed.</p>
+    }
+     Registered Courses
+    <h3>Registered Courses</h3>
+    @if (ViewBag.RegisteredCourses != null && ViewBag.RegisteredCourses.Count > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Teacher</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in ViewBag.RegisteredCourses as List<StudentPortalSystemMVC.Models.CourseViewModel>)
+                {
+                    <tr>
+                        <td>@course.COURSE_NAME</td>
+                        <td>@course.TeacherName</td>
+                        <td>@course.CREDITS</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No courses registered.</p>
+    }
+     Attendance
+    <h3>Attendance</h3>
+    @if (ViewBag.Attendance != null && ViewBag.Attendance.Count > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var attendance in ViewBag.Attendance as List<StudentPortalSystemMVC.Models.AttendanceViewModel>)
+                {
+                    <tr>
+                        <td>@attendance.COURSE_NAME</td>
+                        <td>@attendance.ATTENDANCE_DATE.ToShortDateString()</td>
+                        <td>@attendance.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No attendance records available.</p>
+    }
+     Grades
+    <h3>Grades</h3>
+    @if (ViewBag.Grades != null && ViewBag.Grades.Count > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var grade in ViewBag.Grades as List<StudentPortalSystemMVC.Models.GradeViewModel>)
+                {
+                    <tr>
+                        <td>@grade.COURSE_NAME</td>
+                        <td>@(grade.MARKS.HasValue ? grade.MARKS.ToString() : "N/A")</td>
+                        <td>@grade.GRADE</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No grades available.</p>
+    }
+     Fees
+    <h3>Fees</h3>
+    @if (ViewBag.Fees != null && ViewBag.Fees.Count > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var fee in ViewBag.Fees as List<StudentPortalSystemMVC.Models.FeeViewModel>)
+                {
+                    <tr>
+                        <td>@fee.COURSE_NAME</td>
+                        <td>@fee.AMOUNT.ToString("C")</td>
+                        <td>@fee.Status</td>
+                    </tr>
+                }
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>@ViewBag.TotalFees.ToString("C")</strong></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No fees generated.</p>
+    }
+     Transcript
+    <h3>Transcript</h3>
+    @if (ViewBag.Transcript != null && ViewBag.Transcript.Count > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>SGPA</th>
+                    <th>CGPA</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transcript in ViewBag.Transcript as List<StudentPortalSystemMVC.Models.TranscriptViewModel>)
+                {
+                    <tr>
+                        <td>@transcript.COURSE_NAME</td>
+                        <td>@(transcript.MARKS.HasValue ? transcript.MARKS.ToString() : "N/A")</td>
+                        <td>@transcript.GRADE</td>
+                        <td>@(transcript.SGPA != 0.0 ? transcript.SGPA.ToString("F2") : "N/A")</td>
+                        <td>@(transcript.CGPA != 0.0 ? transcript.CGPA.ToString("F2") : "N/A")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No transcript records available.</p>
+    }*@
+
+@{
+    ViewBag.Title = "Student Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Welcome, @ViewBag.Student.FIRST_NAME @ViewBag.Student.LAST_NAME</h2>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger text-center">@ViewBag.ErrorMessage</div>
+            }
+
+            <!-- Personal Info -->
+            <h3 class="mb-3 text-muted">Personal Information</h3>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <p><strong>Email:</strong> @ViewBag.Student.EMAIL</p>
+                    <p><strong>Contact:</strong> @(ViewBag.Student.CONTACT ?? "N/A")</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Address:</strong> @(ViewBag.Student.ADDRESS ?? "N/A")</p>
+                    <p><strong>Department:</strong> @ViewBag.Department</p>
+                </div>
+            </div>
+
+            <!-- Course Registration -->
+            <h3 class="mb-3 text-muted">Course Registration</h3>
+            <div class="mb-4">
+                @if (ViewBag.IsCourseRegistrationOpen)
+                {
+                    <p class="mb-0">
+                        Course registration is open.
+                        <a href="@Url.Action("RegisterCourse", "STUDENT")" class="btn btn-primary ms-2">Register for a Course</a>
+                    </p>
+                }
+                else
+                {
+                    <p class="text-danger mb-0">Course registration is closed.</p>
+                }
+            </div>
+
+            <!-- Registered Courses -->
+            <h3 class="mb-3 text-muted">Registered Courses</h3>
+            @if (ViewBag.RegisteredCourses != null && ViewBag.RegisteredCourses.Count > 0)
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Course</th>
+                                <th>Teacher</th>
+                                <th>Credits</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var course in ViewBag.RegisteredCourses as List<StudentPortalSystemMVC.Models.CourseViewModel>)
+                            {
+                                <tr>
+                                    <td>@course.COURSE_NAME</td>
+                                    <td>@course.TeacherName</td>
+                                    <td>@course.CREDITS</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-4">No courses registered.</p>
+            }
+
+            <!-- Attendance -->
+            <h3 class="mb-3 text-muted">Attendance</h3>
+            @if (ViewBag.Attendance != null && ViewBag.Attendance.Count > 0)
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var attendance in ViewBag.Attendance as List<StudentPortalSystemMVC.Models.AttendanceViewModel>)
+                            {
+                                <tr>
+                                    <td>@attendance.COURSE_NAME</td>
+                                    <td>@attendance.ATTENDANCE_DATE.ToShortDateString()</td>
+                                    <td class="@(attendance.Status == "Present" ? "text-success" : "text-danger")">@attendance.Status</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-4">No attendance records available.</p>
+            }
+
+            <!-- Grades -->
+            <h3 class="mb-3 text-muted">Grades</h3>
+            @if (ViewBag.Grades != null && ViewBag.Grades.Count > 0)
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Course</th>
+                                <th>Marks</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var grade in ViewBag.Grades as List<StudentPortalSystemMVC.Models.GradeViewModel>)
+                            {
+                                <tr>
+                                    <td>@grade.COURSE_NAME</td>
+                                    <td>@(grade.MARKS.HasValue ? grade.MARKS.ToString() : "N/A")</td>
+                                    <td>@grade.GRADE</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-4">No grades available.</p>
+            }
+
+            <!-- Fees -->
+            <h3 class="mb-3 text-muted">Fees</h3>
+            @if (ViewBag.Fees != null && ViewBag.Fees.Count > 0)
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Course</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var fee in ViewBag.Fees as List<StudentPortalSystemMVC.Models.FeeViewModel>)
+                            {
+                                <tr>
+                                    <td>@fee.COURSE_NAME</td>
+                                    <td>@fee.AMOUNT.ToString("N2")</td>
+                                    <td class="@(fee.Status == "Paid" ? "text-success" : "text-danger")">@fee.Status</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><strong>@ViewBag.TotalFees.ToString("N2")</strong></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-4">No fees generated.</p>
+            }
+
+            <!-- Transcript -->
+            <h3 class="mb-3 text-muted">Transcript</h3>
+            @if (ViewBag.Transcript != null && ViewBag.Transcript.Count > 0)
+            {
+                <div class="table-responsive mb-4">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Course</th>
+                                <th>Marks</th>
+                                <th>Grade</th>
+                                <th>SGPA</th>
+                                <th>CGPA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var transcript in ViewBag.Transcript as List<StudentPortalSystemMVC.Models.TranscriptViewModel>)
+                            {
+                                <tr>
+                                    <td>@transcript.COURSE_NAME</td>
+                                    <td>@(transcript.MARKS.HasValue ? transcript.MARKS.ToString() : "N/A")</td>
+                                    <td>@transcript.GRADE</td>
+                                    <td>@(transcript.SGPA != 0.0 ? transcript.SGPA.ToString("F2") : "N/A")</td>
+                                    <td>@(transcript.CGPA != 0.0 ? transcript.CGPA.ToString("F2") : "N/A")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-4">No transcript records available.</p>
+            }
+        </div>
+    </div>

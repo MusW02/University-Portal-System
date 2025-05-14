@@ -1,0 +1,51 @@
+﻿@*@{
+        ViewBag.Title = "Welcome";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Welcome, @Session["Role"]!</h2>
+    <p>This is your dashboard.</p>
+
+    @if (Session["Role"].ToString() == "Admin")
+    {
+        <p><a href="@Url.Action("Index", "Admin")" class="btn btn-primary">Go to Admin Dashboard</a></p>
+    }
+    else if (Session["Role"].ToString() == "Student")
+    {
+        <p><a href="@Url.Action("Index", "Students")" class="btn btn-primary">Go to Student Dashboard</a></p>
+    }
+    else if (Session["Role"].ToString() == "Teacher")
+    {
+        <p><a href="@Url.Action("Index", "Teachers")" class="btn btn-primary">Go to Teacher Dashboard</a></p>
+    }
+
+    <p><a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Logout</a></p>*@
+
+@{
+    ViewBag.Title = "Welcome";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 mt-5 shadow-sm bg-light text-center">
+            <h2 class="mb-4 text-primary">Welcome, @Session["Role"]!</h2>
+            <p class="lead text-muted">This is your dashboard.</p>
+
+            @if (Session["Role"].ToString() == "Admin")
+            {
+                <p><a href="@Url.Action("Index", "Admin")" class="btn btn-primary mb-2">Go to Admin Dashboard</a></p>
+            }
+            else if (Session["Role"].ToString() == "Student")
+            {
+                <p><a href="@Url.Action("Index", "Students")" class="btn btn-primary mb-2">Go to Student Dashboard</a></p>
+            }
+            else if (Session["Role"].ToString() == "Teacher")
+            {
+                <p><a href="@Url.Action("Index", "Teachers")" class="btn btn-primary mb-2">Go to Teacher Dashboard</a></p>
+            }
+
+            <p><a href="@Url.Action("Index", "Home")" class="btn btn-secondary mt-3">Logout</a></p>
+        </div>
+    </div>
+</div>

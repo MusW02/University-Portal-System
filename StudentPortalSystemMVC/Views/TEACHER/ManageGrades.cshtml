@@ -1,0 +1,123 @@
+﻿@*@model List<StudentPortalSystemMVC.Models.StudentGradeViewModel>
+    @{
+        ViewBag.Title = "Manage Grades - " + ViewBag.CourseName;
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Grades for @ViewBag.CourseName</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <p>
+        <a href="@Url.Action("AddGrade", new { courseId = ViewBag.CourseId })" class="btn btn-primary">Add Grades</a>
+        <a href="@Url.Action("Dashboard")" class="btn btn-secondary">Back to Dashboard</a>
+    </p>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var grade in Model)
+                {
+                    <tr>
+                        <td>@grade.StudentName</td>
+                        <td>@(grade.Marks.HasValue ? grade.Marks.ToString() : "N/A")</td>
+                        <td>@grade.Grade</td>
+                        <td>
+                            <a href="@Url.Action("EditGrade", new { gradeId = grade.GRADE_ID })" class="btn btn-warning">Edit</a>
+                            @using (Html.BeginForm("DeleteGrade", "Teacher", new { gradeId = grade.GRADE_ID }, FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this grade?');">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No grades assigned.</p>
+    }*@
+
+@model List<StudentPortalSystemMVC.Models.StudentGradeViewModel>
+@{
+    ViewBag.Title = "Manage Grades - " + ViewBag.CourseName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card p-4 mt-5 shadow-sm bg-light">
+            <h2 class="text-center mb-4 text-primary">Grades for @ViewBag.CourseName</h2>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger text-center">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success text-center">@TempData["Success"]</div>
+            }
+
+            <div class="d-flex justify-content-end mb-3">
+                <a href="@Url.Action("AddGrade", new { courseId = ViewBag.CourseId })" class="btn btn-primary me-2">Add Grades</a>
+                <a href="@Url.Action("Dashboard")" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Student</th>
+                                <th>Marks</th>
+                                <th>Grade</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var grade in Model)
+                            {
+                                <tr>
+                                    <td>@grade.StudentName</td>
+                                    <td>@(grade.Marks.HasValue ? grade.Marks.ToString() : "N/A")</td>
+                                    <td>@grade.Grade</td>
+                                    <td>
+                                        <a href="@Url.Action("EditGrade", new { gradeId = grade.GRADE_ID })" class="btn btn-warning btn-sm me-1">Edit</a>
+                                        @using (Html.BeginForm("DeleteGrade", "Teacher", new { gradeId = grade.GRADE_ID }, FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this grade?');">Delete</button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-center text-muted">No grades assigned.</p>
+            }
+        </div>
+    </div>
+</div>

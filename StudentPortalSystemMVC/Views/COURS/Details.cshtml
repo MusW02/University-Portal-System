@@ -1,0 +1,50 @@
+﻿@model StudentPortalSystemMVC.Models.COURS
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>COURS</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.COURSE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COURSE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CREDITS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CREDITS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT_PER_COURSE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT_PER_COURSE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TEACHER.TEACHER_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEACHER.TEACHER_ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.COURSE_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

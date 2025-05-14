@@ -1,0 +1,57 @@
+﻿@model IEnumerable<StudentPortalSystemMVC.Models.TRANSCRIPT>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SGPA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CGPA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COURS.COURSE_NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GRADE.GRADE1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STUDENT.ROLL_NO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SGPA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CGPA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COURS.COURSE_NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GRADE.GRADE1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STUDENT.ROLL_NO)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TRANSCRIPT_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TRANSCRIPT_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TRANSCRIPT_ID })
+        </td>
+    </tr>
+}
+
+</table>

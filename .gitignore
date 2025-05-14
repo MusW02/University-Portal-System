@@ -1,0 +1,33 @@
+## Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Ignore build results
+bin/
+obj/
+Debug/
+Release/
+
+## Ignore NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+## Ignore Web build
+*.Publish.xml
+*.publishsettings
+
+## Ignore ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+## Ignore logs and temp
+*.log
+*.tmp
+
+## Ignore node_modules (if any JS libraries used)
+node_modules/
+
+## Ignore IIS Express settings (optional)
+.vsconfig/

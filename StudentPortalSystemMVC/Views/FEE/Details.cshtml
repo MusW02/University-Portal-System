@@ -1,0 +1,50 @@
+﻿@model StudentPortalSystemMVC.Models.FEE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FEE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AMOUNT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AMOUNT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FEE_STATUS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FEE_STATUS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.COURS.COURSE_NAME)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.COURS.COURSE_NAME)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STUDENT.ROLL_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STUDENT.ROLL_NO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FEE_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
