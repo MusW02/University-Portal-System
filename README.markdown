@@ -11,8 +11,6 @@ While real-world university portals require addressing complex constraints (e.g.
 - [Architecture](#architecture)
 - [Setup Instructions](#setup-instructions)
 - [Usage](#usage)
-- [Diagrams](#diagrams)
-- [Project Report](#project-report)
 - [Contributions](#contributions)
 - [License](#license)
 
